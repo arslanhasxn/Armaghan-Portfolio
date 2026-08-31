@@ -2,17 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link
-      rel="icon"
-      href="/favicon-light-scheme.png"
-      media="(prefers-color-scheme: light)"
-    />
-    <link
-      rel="icon"
-      href="/favicon-dark-scheme.png"
-      media="(prefers-color-scheme: dark)"
-    />
-    <link rel="icon" href="/favicon-light-scheme.png" />
+    <link rel="icon" type="image/png" href="/favicon-dark-ui.png" id="site-favicon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
     <meta
@@ -22,7 +12,7 @@
     <title>Portfolio | Armaghan Hasan</title>
     <script>
       (function () {
-        const stored = localStorage.getItem("armaghan-theme") || "system";
+        const stored = localStorage.getItem("armaghan-theme") || "dark";
         const resolved =
           stored === "system"
             ? window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -31,6 +21,18 @@
             : stored;
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved;
+
+        var browserScheme = window.matchMedia("(prefers-color-scheme: dark)")
+          .matches
+          ? "dark"
+          : "light";
+        var favicon = document.getElementById("site-favicon");
+        if (favicon) {
+          favicon.href =
+            browserScheme === "dark"
+              ? "/favicon-dark-ui.png"
+              : "/favicon-light-ui.png";
+        }
       })();
     </script>
   </head>

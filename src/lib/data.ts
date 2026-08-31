@@ -6,14 +6,8 @@ export const siteConfig = {
   email: "armaghanhasan2005@gmail.com",
   phone: "+91 96433 48550",
   phoneHref: "tel:+919643348550",
-  resumeUrl:
-    "https://drive.google.com/file/d/1_lH_64xfrT-wIpN7LwkBp0jWfCnqe6zV/view?usp=sharing",
   resume: {
-    localPath: "/resume.pdf",
-    drivePreview:
-      "https://drive.google.com/file/d/1_lH_64xfrT-wIpN7LwkBp0jWfCnqe6zV/preview",
-    driveDownload:
-      "https://drive.google.com/uc?export=download&id=1_lH_64xfrT-wIpN7LwkBp0jWfCnqe6zV",
+    path: "/resume.pdf",
     fileName: "Armaghan-Hasan-Resume.pdf",
   },
   social: {
@@ -32,10 +26,10 @@ export const siteConfig = {
   },
   avatar:
     "https://framerusercontent.com/images/yB0uJtHYuwcORowUN7rgTINgFMs.jpeg?width=854&height=740",
-  faviconLight: "/favicon-light-scheme.png",
-  faviconDark: "/favicon-dark-scheme.png",
-  ogImage:
-    "https://framerusercontent.com/images/C4nm7exyQX0DrKBjOrOzqAr09dI.webp",
+  logoWhite: "/logo-white.png",
+  logoBlack: "/logo-black.png",
+  faviconLightUi: "/favicon-light-ui.png",
+  faviconDarkUi: "/favicon-dark-ui.png",
 };
 
 export type ProjectSlug =

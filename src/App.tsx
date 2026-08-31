@@ -1,15 +1,11 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 import { OmnibarSearch } from "@/components/OmnibarSearch";
-import { SiteFooter } from "@/components/SiteFooter";
 import { BottomNav, SiteHeader } from "@/components/SiteChrome";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { AboutPage } from "@/pages/AboutPage";
-import { ContactPage } from "@/pages/ContactPage";
-import { HomePage } from "@/pages/HomePage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
-import { PortfolioPage } from "@/pages/PortfolioPage";
 import { ProjectPage } from "@/pages/ProjectPage";
-import { ResumePage } from "@/pages/ResumePage";
+import { ProjectsPage } from "@/pages/ProjectsPage";
 
 export default function App() {
   return (
@@ -17,18 +13,23 @@ export default function App() {
       <div className="page-shell">
         <SiteHeader />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<ProjectsPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/portfolio" element={<PortfolioPage />} />
-          <Route path="/portfolio/:slug" element={<ProjectPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/resume" element={<ResumePage />} />
+          <Route path="/projects/:slug" element={<ProjectPage />} />
+          <Route path="/portfolio" element={<Navigate to="/" replace />} />
+          <Route path="/portfolio/:slug" element={<PortfolioRedirect />} />
+          <Route path="/contact" element={<Navigate to="/about" replace />} />
+          <Route path="/resume" element={<Navigate to="/about#resume" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-        <SiteFooter />
         <BottomNav />
         <OmnibarSearch />
       </div>
     </SmoothScrollProvider>
   );
+}
+
+function PortfolioRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/projects/${slug ?? ""}`} replace />;
 }

@@ -1,9 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
-import { Monitor, Moon, Search, Sun } from "lucide-react";
-import { siteConfig } from "@/lib/data";
-import { LiveClock } from "@/components/LiveClock";
+import { Link, useLocation } from "react-router-dom";
+import { Briefcase, FileText, Monitor, Moon, Search, Sun } from "lucide-react";
+import { getProjectBySlug } from "@/lib/data";
+import { Logo } from "@/components/Logo";
 import { useSearch } from "@/context/SearchContext";
 import { useTheme, type ThemeMode } from "@/context/ThemeContext";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,52 +14,47 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
+function getHeaderTitle(pathname: string): string {
+  if (pathname === "/") return "PROJECTS";
+  if (pathname === "/about") return "ABOUT";
+  const match = pathname.match(/^\/projects\/([^/]+)/);
+  if (match) {
+    const project = getProjectBySlug(match[1]);
+    return project?.title.toUpperCase() ?? "PROJECT";
+  }
+  return "PROJECTS";
+}
+
 export function SiteHeader() {
   const { openSearch } = useSearch();
   const { mode, setMode } = useTheme();
+  const { pathname } = useLocation();
+  const title = getHeaderTitle(pathname);
+  const isProjectPage = pathname.startsWith("/projects/");
 
   return (
-    <header className="glass-bar sticky top-0 z-40">
-      <div className="page-main flex h-14 items-center justify-between gap-4 md:h-16">
+    <header className="sticky top-0 z-40 border-b border-border/50 bg-background/90 backdrop-blur-xl">
+      <div className="page-main flex h-14 items-center justify-between gap-3 sm:h-16">
         <Link
           to="/"
-          className="truncate font-display text-sm font-medium tracking-tight transition-opacity hover:opacity-60 md:text-base"
+          className="flex h-8 w-8 shrink-0 items-center justify-center sm:h-9 sm:w-9"
+          aria-label="Home"
         >
-          {siteConfig.name}
+          <Logo />
         </Link>
 
-        <div className="hidden items-center gap-2 text-xs text-muted-foreground md:flex md:text-sm">
-          <span>{siteConfig.role}</span>
-          <span>•</span>
-          <span>{siteConfig.city}</span>
-          <span>•</span>
-          <LiveClock />
-        </div>
+        <h1 className="truncate font-display text-sm font-medium uppercase tracking-[0.2em] sm:text-base">
+          {title}
+        </h1>
 
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            onClick={openSearch}
-            className="inline-flex h-9 items-center gap-2 rounded-full px-3 text-xs text-muted-foreground transition-colors hover:text-foreground md:text-sm"
-            aria-label="Search"
-          >
-            <Search className="h-4 w-4" />
-            <span className="hidden lg:inline">Search</span>
-            <kbd className="hidden rounded border border-border px-1.5 py-0.5 text-[10px] lg:inline">
-              ⌘K
-            </kbd>
-          </button>
-
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button
-                type="button"
-                className="relative inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
-                aria-label="Theme"
-              >
+              <Button variant="ghost" size="icon" className="h-9 w-9">
                 <Sun className="h-4 w-4 dark:hidden" />
                 <Moon className="hidden h-4 w-4 dark:block" />
-              </button>
+                <span className="sr-only">Theme</span>
+              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuRadioGroup
@@ -80,57 +76,100 @@ export function SiteHeader() {
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {!isProjectPage ? (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={openSearch}
+              className="hidden h-9 gap-2 rounded-full px-3 text-muted-foreground sm:inline-flex"
+            >
+              <Search className="h-3.5 w-3.5" />
+              Search
+            </Button>
+          ) : null}
+
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={openSearch}
+            className="h-9 w-9 sm:hidden"
+            aria-label="Search"
+          >
+            <Search className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </header>
   );
 }
 
-const bottomLinks = [
-  { to: "/portfolio", label: "Projects" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-  { to: "/resume", label: "Resume" },
+const dockItems = [
+  {
+    to: "/",
+    label: "Projects",
+    icon: Briefcase,
+    isActive: (pathname: string) =>
+      pathname === "/" || pathname.startsWith("/projects/"),
+  },
+  {
+    to: "/about",
+    label: "About",
+    icon: null,
+    isActive: (pathname: string, hash: string) =>
+      pathname === "/about" && hash !== "#resume",
+  },
+  {
+    to: "/about#resume",
+    label: "Resume",
+    icon: FileText,
+    isActive: (pathname: string, hash: string) =>
+      pathname === "/about" && hash === "#resume",
+  },
 ] as const;
 
 export function BottomNav() {
-  const { openSearch } = useSearch();
+  const { pathname, hash } = useLocation();
 
   return (
-    <nav aria-label="Primary" className="glass-bar fixed inset-x-0 bottom-0 z-50">
-      <div className="page-main flex items-center gap-1 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] md:gap-2 md:py-3">
-        {bottomLinks.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            className={({ isActive }) =>
-              cn(
-                "relative flex-1 rounded-lg py-2 text-center text-[11px] font-medium transition-colors md:text-sm",
-                isActive
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
-              )
-            }
-          >
-            {({ isActive }) => (
-              <>
-                {isActive && (
-                  <span className="absolute inset-x-3 top-0 h-px bg-primary md:inset-x-4" />
-                )}
-                {item.label}
-              </>
-            )}
-          </NavLink>
-        ))}
+    <nav
+      aria-label="Primary"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
+    >
+      <div className="dock-nav pointer-events-auto">
+        {dockItems.map((item) => {
+          const isLogo = item.icon === null;
+          const active = item.isActive(pathname, hash);
 
-        <button
-          type="button"
-          onClick={openSearch}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground md:h-10 md:w-10"
-          aria-label="Search"
-        >
-          <Search className="h-4 w-4" />
-        </button>
+          if (isLogo) {
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                aria-label={item.label}
+                aria-current={active ? "page" : undefined}
+                className={cn("dock-item dock-item-logo", active && "dock-item-active")}
+              >
+                <span className="flex h-9 w-9 items-center justify-center sm:h-10 sm:w-10">
+                  <Logo />
+                </span>
+              </Link>
+            );
+          }
+
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              aria-label={item.label}
+              aria-current={active ? "page" : undefined}
+              className={cn("dock-item", active && "dock-item-active")}
+            >
+              <Icon className="h-5 w-5" strokeWidth={1.75} />
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

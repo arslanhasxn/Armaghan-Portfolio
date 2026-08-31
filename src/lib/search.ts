@@ -14,36 +14,22 @@ const staticPages: SearchResult[] = [
   {
     id: "page-projects",
     title: "Projects",
-    subtitle: "View all case studies",
-    href: "/portfolio",
+    subtitle: "All case studies",
+    href: "/",
     type: "page",
   },
   {
     id: "page-about",
-    title: "About Me",
+    title: "About",
     subtitle: siteConfig.name,
     href: "/about",
-    type: "page",
-  },
-  {
-    id: "page-contact",
-    title: "Contact",
-    subtitle: siteConfig.email,
-    href: "/contact",
     type: "page",
   },
   {
     id: "page-resume",
     title: "Resume",
     subtitle: "View and download CV",
-    href: "/resume",
-    type: "page",
-  },
-  {
-    id: "page-home",
-    title: "Home",
-    subtitle: "Back to landing",
-    href: "/",
+    href: "/about#resume",
     type: "page",
   },
 ];
@@ -52,7 +38,7 @@ const projectResults: SearchResult[] = projects.map((project) => ({
   id: `project-${project.slug}`,
   title: project.title,
   subtitle: project.category,
-  href: `/portfolio/${project.slug}`,
+  href: `/projects/${project.slug}`,
   type: "project",
 }));
 

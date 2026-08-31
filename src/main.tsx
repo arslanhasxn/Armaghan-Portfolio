@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { SearchProvider } from "@/context/SearchContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import App from "./App";
+import { initBrowserFavicon } from "@/lib/favicon";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -17,3 +18,5 @@ createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </StrictMode>,
 );
+
+initBrowserFavicon();

@@ -41,7 +41,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mode, setModeState] = useState<ThemeMode>(() => {
     if (typeof window === "undefined") return "system";
     const stored = localStorage.getItem(STORAGE_KEY) as ThemeMode | null;
-    return stored ?? "system";
+    return stored ?? "dark";
   });
 
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() =>
