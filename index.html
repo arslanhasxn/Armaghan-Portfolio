@@ -4,20 +4,35 @@
     <meta charset="UTF-8" />
     <link
       rel="icon"
-      href="https://framerusercontent.com/images/H53zwtvCVdtLq91Rj8fb9VaNv5A.png"
+      href="/favicon-light-scheme.png"
       media="(prefers-color-scheme: light)"
     />
     <link
       rel="icon"
-      href="https://framerusercontent.com/images/0Jx5IAKnaB5WDUmqxmJCAy7bDg.png"
+      href="/favicon-dark-scheme.png"
       media="(prefers-color-scheme: dark)"
     />
+    <link rel="icon" href="/favicon-light-scheme.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <meta
       name="description"
       content="Portfolio of Armaghan Hasan — designer focused on digital design, art direction, and illustration."
     />
     <title>Portfolio | Armaghan Hasan</title>
+    <script>
+      (function () {
+        const stored = localStorage.getItem("armaghan-theme") || "system";
+        const resolved =
+          stored === "system"
+            ? window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light"
+            : stored;
+        document.documentElement.classList.toggle("dark", resolved === "dark");
+        document.documentElement.style.colorScheme = resolved;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

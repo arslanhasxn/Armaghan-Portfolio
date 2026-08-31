@@ -8,6 +8,14 @@ export const siteConfig = {
   phoneHref: "tel:+919643348550",
   resumeUrl:
     "https://drive.google.com/file/d/1_lH_64xfrT-wIpN7LwkBp0jWfCnqe6zV/view?usp=sharing",
+  resume: {
+    localPath: "/resume.pdf",
+    drivePreview:
+      "https://drive.google.com/file/d/1_lH_64xfrT-wIpN7LwkBp0jWfCnqe6zV/preview",
+    driveDownload:
+      "https://drive.google.com/uc?export=download&id=1_lH_64xfrT-wIpN7LwkBp0jWfCnqe6zV",
+    fileName: "Armaghan-Hasan-Resume.pdf",
+  },
   social: {
     twitter: {
       label: "@ar.ma.ghan",
@@ -24,10 +32,8 @@ export const siteConfig = {
   },
   avatar:
     "https://framerusercontent.com/images/yB0uJtHYuwcORowUN7rgTINgFMs.jpeg?width=854&height=740",
-  faviconLight:
-    "https://framerusercontent.com/images/H53zwtvCVdtLq91Rj8fb9VaNv5A.png",
-  faviconDark:
-    "https://framerusercontent.com/images/0Jx5IAKnaB5WDUmqxmJCAy7bDg.png",
+  faviconLight: "/favicon-light-scheme.png",
+  faviconDark: "/favicon-dark-scheme.png",
   ogImage:
     "https://framerusercontent.com/images/C4nm7exyQX0DrKBjOrOzqAr09dI.webp",
 };
@@ -206,8 +212,7 @@ export const homeNavItems = [
   },
   {
     label: "Resume",
-    href: siteConfig.resumeUrl,
-    external: true,
+    href: "/resume",
     preview:
       "https://framerusercontent.com/images/0j5gYeoRsZG8PJ9hniVzHMcaYo.webp?width=340&height=500",
   },

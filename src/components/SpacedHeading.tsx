@@ -7,12 +7,10 @@ export function SpacedHeading({
   className,
 }: {
   children: string;
-  as?: "h1" | "h2" | "h3";
+  as?: "h1" | "h2";
   className?: string;
 }) {
   return (
-    <Tag className={cn("spaced-title font-display text-display", className)}>
-      {splitTitle(children)}
-    </Tag>
+    <Tag className={cn("spaced-title", className)}>{splitTitle(children)}</Tag>
   );
 }
