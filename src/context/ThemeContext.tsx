@@ -15,6 +15,7 @@ interface ThemeContextValue {
   mode: ThemeMode;
   resolvedTheme: ResolvedTheme;
   setMode: (mode: ThemeMode) => void;
+  toggleTheme: () => void;
 }
 
 const STORAGE_KEY = "armaghan-theme";
@@ -22,10 +23,21 @@ const STORAGE_KEY = "armaghan-theme";
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function getSystemTheme(): ResolvedTheme {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   return window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
+}
+
+function readStoredMode(): ThemeMode {
+  if (typeof window === "undefined") return "system";
+
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored === "light" || stored === "dark" || stored === "system") {
+    return stored;
+  }
+
+  return "system";
 }
 
 function resolveTheme(mode: ThemeMode): ResolvedTheme {
@@ -38,14 +50,9 @@ function applyResolvedTheme(resolved: ResolvedTheme) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>(() => {
-    if (typeof window === "undefined") return "system";
-    const stored = localStorage.getItem(STORAGE_KEY) as ThemeMode | null;
-    return stored ?? "dark";
-  });
-
+  const [mode, setModeState] = useState<ThemeMode>(readStoredMode);
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() =>
-    resolveTheme(mode),
+    resolveTheme(readStoredMode()),
   );
 
   const setMode = useCallback((nextMode: ThemeMode) => {
@@ -55,6 +62,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, nextMode);
     applyResolvedTheme(resolved);
   }, []);
+
+  const toggleTheme = useCallback(() => {
+    setMode(resolvedTheme === "dark" ? "light" : "dark");
+  }, [resolvedTheme, setMode]);
 
   useEffect(() => {
     const resolved = resolveTheme(mode);
@@ -77,8 +88,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [mode]);
 
   const value = useMemo(
-    () => ({ mode, resolvedTheme, setMode }),
-    [mode, resolvedTheme, setMode],
+    () => ({ mode, resolvedTheme, setMode, toggleTheme }),
+    [mode, resolvedTheme, setMode, toggleTheme],
   );
 
   return (

@@ -1,20 +1,21 @@
-import { Link } from "react-router-dom";
+import { BentoCard } from "@/components/ui/bento-grid";
 import type { Project } from "@/lib/data";
-import { Card } from "@/components/ui/card";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <Link to={`/projects/${project.slug}`} className="group block">
-      <Card className="overflow-hidden border-border/50 bg-card/40 transition-colors hover:border-border hover:bg-card/70">
-        <div className="aspect-[4/3] overflow-hidden bg-muted sm:aspect-[16/10]">
-          <img
-            src={project.thumbnail}
-            alt={project.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            loading="lazy"
-          />
-        </div>
-      </Card>
-    </Link>
+    <BentoCard
+      name={project.title}
+      description={project.category}
+      href={`/projects/${project.slug}`}
+      cta="View project"
+      background={
+        <img
+          src={project.thumbnail}
+          alt=""
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
+      }
+    />
   );
 }

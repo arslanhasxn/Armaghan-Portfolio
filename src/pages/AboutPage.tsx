@@ -1,125 +1,92 @@
+import { ArrowUpRight } from "lucide-react";
+
 import { aboutContent, siteConfig } from "@/lib/data";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { AboutPhoto } from "@/components/AboutPhoto";
+import { PageEnter } from "@/components/motion/PageEnter";
+import { Reveal } from "@/components/motion/Reveal";
+
+function ContactItem({
+  label,
+  value,
+  href,
+}: {
+  label: string;
+  value: string;
+  href: string;
+}) {
+  return (
+    <div className="about-contact-item">
+      <p className="text-sm text-muted-foreground">{label}</p>
+      <a
+        href={href}
+        target={href.startsWith("http") ? "_blank" : undefined}
+        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+        className="group mt-1 inline-flex max-w-full items-start gap-1.5 text-base text-foreground transition-colors hover:text-foreground/80"
+      >
+        <span className="break-all">{value}</span>
+        <ArrowUpRight
+          aria-hidden
+          className="mt-0.5 size-[1.1em] shrink-0 opacity-0 transition-all duration-200 ease-out -translate-x-0.5 translate-y-0.5 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:translate-y-0"
+        />
+      </a>
+    </div>
+  );
+}
 
 export function AboutPage() {
   return (
-    <main className="page-main space-y-10 py-6 sm:space-y-14 sm:py-8 md:py-10">
-      <section id="about" className="scroll-mt-24">
-        <Card className="border-border/60 bg-card/50">
-          <CardHeader>
-            <CardTitle className="font-display text-2xl tracking-tight sm:text-3xl">
+    <PageEnter>
+      <main className="page-main page-content about-page">
+        <section id="about" className="about-layout scroll-mt-24">
+          <Reveal className="about-grid-title">
+            <h1 className="page-title font-display font-semibold tracking-tight">
               About
-            </CardTitle>
-            <CardDescription>{siteConfig.role} · {siteConfig.city}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <p className="max-w-2xl text-sm leading-7 text-foreground/85 sm:text-base sm:leading-8">
-              {aboutContent.bio}
-            </p>
-            <ul className="flex flex-wrap gap-2">
-              {aboutContent.skills.map((skill) => (
-                <li
-                  key={skill}
-                  className="rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground sm:text-sm"
-                >
-                  {skill.replace(" –", "")}
-                </li>
-              ))}
-            </ul>
-            <Separator />
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                  Email
-                </p>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="mt-1 block break-all text-sm hover:text-primary sm:text-base"
-                >
-                  {siteConfig.email}
-                </a>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                  Phone
-                </p>
-                <a
-                  href={siteConfig.phoneHref}
-                  className="mt-1 block text-sm hover:text-primary sm:text-base"
-                >
-                  {siteConfig.phone}
-                </a>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-4 text-sm">
-              <a
-                href={siteConfig.social.linkedin.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={siteConfig.social.instagram.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Instagram
-              </a>
-              <a
-                href={siteConfig.social.twitter.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                X
-              </a>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+            </h1>
+          </Reveal>
 
-      <section id="resume" className="scroll-mt-24">
-        <Card className="border-border/60 bg-card/50">
-          <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <CardTitle className="font-display text-2xl tracking-tight sm:text-3xl">
-                Resume
-              </CardTitle>
-              <CardDescription>
-                View or download {siteConfig.name}&apos;s resume
-              </CardDescription>
+          <Reveal className="about-photo">
+            <AboutPhoto />
+          </Reveal>
+
+          <Reveal delay={0.05} className="about-copy">
+            <div className="about-bio">
+              {aboutContent.bio.map((paragraph) => (
+                <p key={paragraph} className="about-text">
+                  {paragraph}
+                </p>
+              ))}
             </div>
-            <Button asChild className="w-full shrink-0 sm:w-auto">
-              <a
-                href={siteConfig.resume.path}
-                download={siteConfig.resume.fileName}
-              >
-                Download PDF
-              </a>
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-hidden rounded-lg border border-border bg-background">
-              <iframe
-                title={`${siteConfig.name} resume`}
-                src={siteConfig.resume.path}
-                className="h-[60vh] min-h-[320px] w-full sm:min-h-[480px]"
-              />
+
+            <div className="about-contact-grid">
+              <div className="about-contact-left">
+                <ContactItem
+                  label="Email"
+                  value={siteConfig.email}
+                  href={`mailto:${siteConfig.email}`}
+                />
+                <ContactItem
+                  label="Phone"
+                  value={siteConfig.phone}
+                  href={siteConfig.phoneHref}
+                />
+              </div>
+
+              <div className="about-contact-right">
+                <ContactItem
+                  label="Instagram"
+                  value={siteConfig.social.instagram.label}
+                  href={siteConfig.social.instagram.href}
+                />
+                <ContactItem
+                  label="LinkedIn"
+                  value={siteConfig.social.linkedin.label}
+                  href={siteConfig.social.linkedin.href}
+                />
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      </section>
-    </main>
+          </Reveal>
+        </section>
+      </main>
+    </PageEnter>
   );
 }

@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes, useParams } from "react-router-dom";
-import { OmnibarSearch } from "@/components/OmnibarSearch";
+import { CursorLogoProvider } from "@/components/CursorLogo";
 import { BottomNav, SiteHeader } from "@/components/SiteChrome";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { AboutPage } from "@/pages/AboutPage";
@@ -10,7 +10,8 @@ import { ProjectsPage } from "@/pages/ProjectsPage";
 export default function App() {
   return (
     <SmoothScrollProvider>
-      <div className="page-shell">
+      <CursorLogoProvider>
+        <div className="page-shell">
         <SiteHeader />
         <Routes>
           <Route path="/" element={<ProjectsPage />} />
@@ -19,12 +20,11 @@ export default function App() {
           <Route path="/portfolio" element={<Navigate to="/" replace />} />
           <Route path="/portfolio/:slug" element={<PortfolioRedirect />} />
           <Route path="/contact" element={<Navigate to="/about" replace />} />
-          <Route path="/resume" element={<Navigate to="/about#resume" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-        <BottomNav />
-        <OmnibarSearch />
       </div>
+      <BottomNav />
+      </CursorLogoProvider>
     </SmoothScrollProvider>
   );
 }

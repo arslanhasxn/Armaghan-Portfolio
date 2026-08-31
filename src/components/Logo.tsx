@@ -19,7 +19,7 @@ export function Logo({
           : siteConfig.logoBlack
       }
       alt={alt}
-      className={cn("h-full w-full object-contain", className)}
+      className={cn("object-contain", className)}
     />
   );
 }

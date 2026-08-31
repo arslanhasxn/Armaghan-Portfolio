@@ -12,9 +12,9 @@
     <title>Portfolio | Armaghan Hasan</title>
     <script>
       (function () {
-        const stored = localStorage.getItem("armaghan-theme") || "dark";
+        const stored = localStorage.getItem("armaghan-theme");
         const resolved =
-          stored === "system"
+          !stored || stored === "system"
             ? window.matchMedia("(prefers-color-scheme: dark)").matches
               ? "dark"
               : "light"

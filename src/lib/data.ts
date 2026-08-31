@@ -7,25 +7,19 @@ export const siteConfig = {
   phone: "+91 96433 48550",
   phoneHref: "tel:+919643348550",
   resume: {
-    path: "/resume.pdf",
-    fileName: "Armaghan-Hasan-Resume.pdf",
+    url: "https://drive.google.com/file/d/1_lH_64xfrT-wIpN7LwkBp0jWfCnqe6zV/view?usp=sharing",
   },
   social: {
-    twitter: {
-      label: "@ar.ma.ghan",
-      href: "https://twitter.com/ar.ma.ghan",
-    },
     instagram: {
       label: "@ar.ma.ghan",
       href: "https://instagram.com/ar.ma.ghan",
     },
     linkedin: {
-      label: "@armaghanhasan",
-      href: "https://linkedin.com/in/armaghanhasan",
+      label: "@armaghan-hasan",
+      href: "https://www.linkedin.com/in/armaghan-hasan-1745a7281/",
     },
   },
-  avatar:
-    "https://framerusercontent.com/images/yB0uJtHYuwcORowUN7rgTINgFMs.jpeg?width=854&height=740",
+  avatar: "/about-photo.webp",
   logoWhite: "/logo-white.png",
   logoBlack: "/logo-black.png",
   faviconLightUi: "/favicon-light-ui.png",
@@ -33,11 +27,11 @@ export const siteConfig = {
 };
 
 export type ProjectSlug =
-  | "travel-easy"
-  | "gamma"
-  | "stream-ai"
-  | "foome"
-  | "edbost";
+  | "furugiya"
+  | "reflect"
+  | "cridget"
+  | "mesut"
+  | "ergoflow-station";
 
 export interface Project {
   slug: ProjectSlug;
@@ -57,7 +51,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "travel-easy",
+    slug: "furugiya",
     title: "Furugiya",
     category: "App Design",
     role: "Interaction Designer",
@@ -77,10 +71,10 @@ export const projects: Project[] = [
       "Design a platform that brings the thrifting experience directly to users, while promoting sustainable fashion and giving consumers access to authenticated luxury menswear and womenswear. The goal was to make discovering, purchasing, and engaging with pre-owned fashion feel simple and appealing.",
     results:
       "Developed the concept and visual direction for FURUGIYA, including its branding, colour palette, typography, product categories, and overall digital experience. User research and survey insights were used to shape the proposed solution around the needs and expectations of its target consumers.",
-    next: "gamma",
+    next: "reflect",
   },
   {
-    slug: "gamma",
+    slug: "reflect",
     title: "Reflect",
     category: "UX/UI Design",
     role: "UX Designer",
@@ -100,11 +94,11 @@ export const projects: Project[] = [
       "Design a financial experience that helps users become more aware of why they spend, rather than simply showing them how much they spend. The goal was to connect emotions with financial behaviour and make managing money feel more approachable, engaging, and less guilt-driven.",
     results:
       "Designed Reflect as a dark-mode, Gen-Z-focused mobile experience with emotional tagging, mood tracking, reflection journaling, spending insights, and gamification. The resulting experience combines financial tracking with emotional analytics to help users recognise triggers, build awareness, and develop healthier spending habits.",
-    prev: "travel-easy",
-    next: "stream-ai",
+    prev: "furugiya",
+    next: "cridget",
   },
   {
-    slug: "stream-ai",
+    slug: "cridget",
     title: "Cridget",
     category: "Product Design",
     role: "Product Designer",
@@ -123,11 +117,11 @@ export const projects: Project[] = [
       "Design an accessible, portable activity that channels fidgeting and restlessness into a mindful, repeatable ritual. The goal was to combine tactile interaction with rhythmic breathing while creating an experience that feels modern, inclusive, and far removed from the typical “therapy tool” aesthetic.",
     results:
       "Developed Cridget, a pocket-sized cross-stitch experience built around rhythmic stitching and box breathing. The final concept includes a portable kit, guided breathing, interchangeable designs, and blind-box style motifs designed to encourage repeat engagement and collection.",
-    prev: "gamma",
-    next: "foome",
+    prev: "reflect",
+    next: "mesut",
   },
   {
-    slug: "foome",
+    slug: "mesut",
     title: "Mesüt",
     category: "Character Design",
     role: "Character Designer",
@@ -146,11 +140,11 @@ export const projects: Project[] = [
       "Develop a visually distinctive mage with a strong silhouette and a clear visual language. The goal was to use shape, clothing, accessories, and symbolism to communicate Mesüt's personality, history, and role as a silent traveller between worlds.",
     results:
       "Created Mesüt, an unpredictable and observant wandering mage defined by his triangular hood, flowing damaged cloak, hidden face, wooden staff, and bell. The final design establishes a lonely, spiritual character whose visual details hint at his long journey and connection to ancient magic.",
-    prev: "stream-ai",
-    next: "edbost",
+    prev: "cridget",
+    next: "ergoflow-station",
   },
   {
-    slug: "edbost",
+    slug: "ergoflow-station",
     title: "Ergoflow Station",
     category: "Product Design",
     role: "Product Designer / 3D Modelling",
@@ -169,7 +163,7 @@ export const projects: Project[] = [
       "Design a workstation specifically around the way designers actually work—reducing physical strain, organizing creative tools, and adapting to different working positions. The goal was to create a functional, ergonomic, and versatile drafting table that could improve both workflow and productivity.",
     results:
       "Developed ErgoFlow Station, a feature-rich workstation with adjustable height and tilt, integrated storage drawers, repositionable supply trays, task lighting, cable management, and adjustable leveling feet. The concept was positioned as a premium-but-accessible, designer-focused workspace supported by user research and competitive analysis.",
-    prev: "foome",
+    prev: "mesut",
   },
 ];
 
@@ -206,7 +200,7 @@ export const homeNavItems = [
   },
   {
     label: "Resume",
-    href: "/resume",
+    href: "https://drive.google.com/file/d/1_lH_64xfrT-wIpN7LwkBp0jWfCnqe6zV/view?usp=sharing",
     preview:
       "https://framerusercontent.com/images/0j5gYeoRsZG8PJ9hniVzHMcaYo.webp?width=340&height=500",
   },
@@ -227,7 +221,11 @@ export const stackTools = [
 ] as const;
 
 export const aboutContent = {
-  bio: "I'm a designer and student at DTU, drawn to the space where thoughtful ideas meet clear, purposeful experiences. I care about how things look, feel, and work, from the overall structure down to the small details that often go unnoticed. I believe good design should feel effortless, intentional, and human, while still having a personality of its own. Alongside my studies, I'm constantly exploring new ideas, experimenting with different mediums, and building things that challenge me, teach me something new, or simply make me curious every day.",
+  bio: [
+    "I'm a designer and student at DTU, drawn to the space where thoughtful ideas meet clear, purposeful experiences. I care about how things look, feel, and work, from the overall structure down to the small details that often go unnoticed.",
+    "I believe good design should feel effortless, intentional, and human, while still having a personality of its own.",
+    "Alongside my studies, I'm constantly exploring new ideas, experimenting with different mediums, and building things that challenge me, teach me something new, or simply make me curious every day.",
+  ],
   skills: ["Digital Design –", "Art Direction –", "Illustrator"],
 };
 
